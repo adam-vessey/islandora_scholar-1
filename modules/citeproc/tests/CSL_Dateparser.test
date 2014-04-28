@@ -1,4 +1,12 @@
 <?php
+
+/**
+ * @file
+ * Date parser test, ported from citeproc-js.
+ *
+ * @see https://bitbucket.org/fbennett/citeproc-js/src/6afa1a71f58e4a0063f1d14b1242a98dd1c8a6b6/tests/citeproc-js/dateparse.js?at=default
+ */
+
 require_once "includes/CSLDateparser.php";
 
 class CSLDateParserTest extends PHPUnit_Framework_TestCase {

@@ -25,7 +25,16 @@ function islandora_google_scholar_create_meta_tags($object) {
     $tags = array();
     $tags['citation_author'] = array();
     $mods = $object['MODS']->content;
-    $mods_xml = new SimpleXMLElement($mods);
+    try {
+      $mods_xml = new SimpleXMLElement($mods);
+    }
+    catch (Exception $e) {
+      watchdog('islandora_google_scholar', 'The "@dsid" of "@pid" could not be parsed as XML.', array(
+        '@dsid' => 'MODS',
+        '@pid' => $object->id,
+      ), WATCHDOG_WARNING, l(t("manage object"), "islandora/object/{$object->id}/manage/datastreams"));
+      return FALSE;
+    }
     $mods_xml->registerXPathNamespace('mods', 'http://www.loc.gov/mods/v3');
 
     $title_results = $mods_xml->xpath(variable_get('islandora_scholar_xpaths_title', '//mods:mods[1]/mods:titleInfo/mods:title'));
